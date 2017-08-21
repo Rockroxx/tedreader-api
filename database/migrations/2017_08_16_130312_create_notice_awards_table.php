@@ -17,6 +17,8 @@ class CreateNoticeAwardsTable extends Migration
             $table->increments('id');
             $table->integer('notice_id');
 
+            $table->integer('lot')->nullable();
+
             $table->string('currency', 3)->nullable();
             $table->float('value')->nullable();
 
