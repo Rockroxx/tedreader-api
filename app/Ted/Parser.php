@@ -187,7 +187,7 @@ class Parser
             if(is_array($data['deadline']))
                 $data['deadline'] = implode('-', $data['deadline']);
             else
-                $data['deadline'] = substr($data['deadline'], 0, 4).'-'.substr($data['deadline'], 4, 2).'-'.substr($data['deadline'], 6, 2);
+                    $data['deadline'] = substr($data['deadline'], 0, 4).'-'.substr($data['deadline'], 4, 2).'-'.substr($data['deadline'], 6, 2);
         }
         $data['published_at'] = substr($data['published_at'], 0, 4).'-'.substr($data['published_at'], 4, 2).'-'.substr($data['published_at'], 6, 2);
         if(isset($data['lot'])){
@@ -2243,6 +2243,11 @@ class Parser
     #region Other
 
     private static function OTH_NOT($x, $data)
+    {
+        return [];
+    }
+
+    private static function EEIG($x, $data)
     {
         return [];
     }
