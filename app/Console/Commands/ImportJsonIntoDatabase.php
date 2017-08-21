@@ -135,7 +135,7 @@ class ImportJsonIntoDatabase extends Command{
                                 $db->table('notice_contacts')->insert([
                                     "notice_id" => $notice_id,
                                     "type" => "t",
-                                    "official_name" => $award['contractor']['official_name'],
+                                    "official_name" => $award['contractor']['official_name'] ?? null,
                                     "name" => $award['contractor']['name'] ?? null,
                                     "country" => $award['contractor']['country'] ?? null,
                                     "city" => $award['contractor']['city'] ?? null,
