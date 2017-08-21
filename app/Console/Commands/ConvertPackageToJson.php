@@ -32,6 +32,8 @@ class ConvertPackageToJson extends Command{
                 $this->line("Converting $folderName.");
                 $files = app('files')->files($folder);
                 foreach($files as $file){
+                    if(strpos($file, '.xml') == false)
+                        continue;
                     $fileName = explode('/', $file);
                     $fileName = explode('.', array_pop($fileName))[0];
                     $x = new Extractor($file);
