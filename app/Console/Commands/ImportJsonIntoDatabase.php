@@ -177,7 +177,7 @@ class ImportJsonIntoDatabase extends Command{
                     $last = explode('/', $files[count($files)-1]);
                     $last = explode('_', explode('.', $last[count($last)-1])[0])[0];
 
-                    app('files')->move($tar, storage_path("app/ted/imported/$tarName"));
+                    app('files')->move(base_path($tar), storage_path("app/ted/imported/$tarName"));
 
                     $db->table('tar_locations')->insert([
                         'tar' => "app/ted/imported/$tarName",
