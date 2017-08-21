@@ -2252,5 +2252,10 @@ class Parser
         return [];
     }
 
+    private static function BUYER_PROFILE($x, $data)
+    {
+        return [];
+    }
+
     #endregion
 }

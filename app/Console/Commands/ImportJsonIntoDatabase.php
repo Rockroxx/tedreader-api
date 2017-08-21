@@ -48,7 +48,7 @@ class ImportJsonIntoDatabase extends Command{
                         $db = app('db');
                         try {
                             // TODO save the references/file locations for later manual inspection
-                            if(!isset($data['title'], $data['description']) || in_array($data['identity'], ["EEIG", "OTH_NOT", "F14_2014"]))
+                            if(!isset($data['title'], $data['description']) || in_array($data['identity'], ["EEIG", "OTH_NOT", "F08_2014", "F14_2014", "F20_2014", "BUYER_PROFILE"]))
                                 continue;
 
                             app('db')->beginTransaction();
