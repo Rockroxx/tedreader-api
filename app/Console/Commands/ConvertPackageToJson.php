@@ -23,10 +23,13 @@ class ConvertPackageToJson extends Command{
         $this->info("Extracting packages");
         $this->extractAndRemoveTar($list);
 
+        $this->line("Finished extracting. Starting conversion into json.");
+
             $folders = app('files')->directories('storage/app/ted/raw/');
             foreach($folders as $folder){
                 $folderName = explode('/', $folder);
                 $folderName = array_pop($folderName);
+                $this->line("Converting $folderName.");
                 $files = app('files')->files($folder);
                 foreach($files as $file){
                     $fileName = explode('/', $file);
@@ -45,7 +48,7 @@ class ConvertPackageToJson extends Command{
             }
     }
 
-    private function extractAndRemoveTar($list){
+    private function extractAndRemoveTar($list, $extracted = false){
         foreach($list as $tar){
             if(strpos($tar, '.tar.gz') > 0 && strpos($tar, '-json.tar.gz') == false){
                 $folderName = explode('/', $tar);
@@ -55,13 +58,17 @@ class ConvertPackageToJson extends Command{
                 if($output){
                     throw new \Exception("Error extracting $tar with the following error messages.\n\n".implode("\n", $output));
                 }
-                //unlink($tar);
+
+                $extracted = true;
+                unlink($tar);
             }
         }
 
-        // in case the tar.gz contains more tar.gz such as those before early 2012 we extract again
-        //$list = app('files')->files('storage/app/ted/raw');
-        //$this->extractAndRemoveTar($list);
+        if($extracted == false){
+            // in case the tar.gz contains more tar.gz such as those before early 2012 we extract again
+            $list = app('files')->files('storage/app/ted/raw');
+            $this->extractAndRemoveTar($list, true);
+        }
     }
 
 }
