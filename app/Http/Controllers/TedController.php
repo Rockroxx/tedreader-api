@@ -34,7 +34,7 @@ class TedController extends Controller
                 return view('master', ['category_list' => json_encode(app('db')->table('categories')->select('code', 'name')->get())]);
         }
 
-        $notices = app('db')->table('notices')->join('notice_details', 'notices.id', '=', 'notice_details.notice_id');
+        $notices = app('db')->table('notice_details')->rightJoin('notices', 'notices.id', '=', 'notice_details.notice_id');
 
         if($request->has('search')){
             $notices = $notices->whereRaw("MATCH (notice_details.title, notice_details.description) against (? in BOOLEAN MODE)", $request->get('search'));
