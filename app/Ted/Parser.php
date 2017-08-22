@@ -182,13 +182,9 @@ class Parser
 
         if(isset($data['description']))
             $data['description'] = implode("\n",array_flatten( $data['description']));
+
         if(isset($data['deadline']))
-        {
-            if(is_array($data['deadline']))
-                $data['deadline'] = implode('-', $data['deadline']);
-            else
-                    $data['deadline'] = substr($data['deadline'], 0, 4).'-'.substr($data['deadline'], 4, 2).'-'.substr($data['deadline'], 6, 2);
-        }
+            $data['deadline'] = substr($data['deadline'], 0, 4).'-'.substr($data['deadline'], 4, 2).'-'.substr($data['deadline'], 6, 2);
         $data['published_at'] = substr($data['published_at'], 0, 4).'-'.substr($data['published_at'], 4, 2).'-'.substr($data['published_at'], 6, 2);
         if(isset($data['lot'])){
             foreach($data['lot'] as $index => $lot){
@@ -375,12 +371,6 @@ class Parser
                                     ]
                                 ]
                             ]
-                        ]
-                    ],
-                    'deadline' => [
-                        [
-                            "PROCEDURE",
-                            "DATE_RECEIPT_TENDERS"
                         ]
                     ],
                     'lot' => [
@@ -684,18 +674,6 @@ class Parser
                     ]
                 ],
 
-                'deadline' => [
-                    [
-                        "PROCEDURES_CONCESSION",
-                        "ADMINISTRATIVE_INFORMATION_CONCESSION",
-                        "TIME_LIMIT_CHP" => ['multiple' => [
-                            "year" => [["YEAR"]],
-                            "month" => [["MONTH"]],
-                            "day" => [["DAY"]],
-                        ]]
-                    ]
-                ]
-
             ]]
         ]);
 
@@ -940,19 +918,6 @@ class Parser
                     ]
                 ],
 
-                'deadline' => [
-                    [
-                        "PROCEDURES_CONTRACT_NOTICE",
-                        "ADMINISTRATIVE_INFORMATION_CONTRACT_CONCESSIONAIRE",
-                        "F11_TIME_LIMIT_TYPE",
-                        "TIME_LIMIT" => ['multiple' => [
-                            "year" => [["YEAR"]],
-                            "month" => [["MONTH"]],
-                            "day" => [["DAY"]],
-                        ]]
-                    ]
-                ]
-
             ]]
         ]);
 
@@ -1033,18 +998,6 @@ class Parser
                         ]
                     ]
                 ],
-
-                'deadline' => [
-                    [
-                        "PROCEDURE_DEFINITION_CONTRACT_SUB_DEFENCE",
-                        "ADMINISTRATIVE_INFORMATION_CONTRACT_SUB_NOTICE_DEFENCE",
-                        "RECEIPT_LIMIT_DATE" => ['multiple' => [
-                            "year" => [["YEAR"]],
-                            "month" => [["MONTH"]],
-                            "day" => [["DAY"]],
-                        ]]
-                    ]
-                ]
 
             ]]
         ]);
@@ -1127,17 +1080,7 @@ class Parser
                     ]
                 ],
 
-                'deadline' => [
-                    [
-                        "PROCEDURE_DEFINITION_CONTRACT_NOTICE_DEFENCE",
-                        "ADMINISTRATIVE_INFORMATION_CONTRACT_NOTICE_DEFENCE",
-                        "RECEIPT_LIMIT_DATE" => ['multiple' => [
-                            "year" => [["YEAR"]],
-                            "month" => [["MONTH"]],
-                            "day" => [["DAY"]],
-                        ]]
-                    ]
-                ],
+
                 'lot' => [
                     [
 
@@ -1232,17 +1175,6 @@ class Parser
                     ]
                 ],
 
-                'deadline' => [
-                    [
-                        "PROCEDURE_DEFINITION_CONTRACT_NOTICE",
-                        "ADMINISTRATIVE_INFORMATION_CONTRACT_NOTICE",
-                        "RECEIPT_LIMIT_DATE" => ['multiple' => [
-                            "year" => [["YEAR"]],
-                            "month" => [["MONTH"]],
-                            "day" => [["DAY"]],
-                        ]]
-                    ]
-                ],
                 'lot' => [
                     [
 
@@ -1427,17 +1359,6 @@ class Parser
                     ]
                 ],
 
-                'deadline' => [
-                    [
-                        "PROCEDURE_DEFINITION_CONTRACT_NOTICE_UTILITIES",
-                        "ADMINISTRATIVE_INFORMATION_CONTRACT_UTILITIES",
-                        "RECEIPT_LIMIT_DATE" => ['multiple' => [
-                            "year" => [["YEAR"]],
-                            "month" => [["MONTH"]],
-                            "day" => [["DAY"]],
-                        ]]
-                    ]
-                ],
                 'lot' => [
                     [
                         "OBJECT_CONTRACT_INFORMATION_CONTRACT_UTILITIES",
@@ -1528,19 +1449,6 @@ class Parser
                         ]
                     ]
                 ],
-
-                'deadline' => [
-                    [
-                        "PROCEDURES_DESIGN_CONTEST",
-                        "ADMINISTRATIVE_INFORMATION_DESIGN_CONTEST_NOTICE",
-                        "TIME_LIMIT_CHP" => ['multiple' => [
-                            "year" => [["YEAR"]],
-                            "month" => [["MONTH"]],
-                            "day" => [["DAY"]],
-                        ]]
-                    ]
-                ],
-
             ]]
         ]);
 
@@ -1895,18 +1803,6 @@ class Parser
                     ]
                 ],
 
-                'deadline' => [
-                    [
-                        "PROCEDURE_PI_MOVE",
-                        "ADMINISTRATIVE_INFORMATION_PI_MOVE",
-                        "RECEIPT_LIMIT_DATE" => ['multiple' => [
-                            "year" => [["YEAR"]],
-                            "month" => [["MONTH"]],
-                            "day" => [["DAY"]],
-                        ]]
-                    ]
-                ],
-
             ]]
         ]);
 
@@ -2091,18 +1987,6 @@ class Parser
                                 ]
                             ]
                         ]
-                    ]
-                ],
-
-                'deadline' => [
-                    [
-                        "PROCEDURES_SIMPLIFIED_CONTRACT_NOTICE",
-                        "ADMINISTRATIVE_INFORMATION_SIMPLIFIED_CONTRACT",
-                        "TIME_LIMIT_CHP" => ['multiple' => [
-                            "year" => [["YEAR"]],
-                            "month" => [["MONTH"]],
-                            "day" => [["DAY"]],
-                        ]]
                     ]
                 ],
 

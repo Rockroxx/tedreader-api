@@ -63,7 +63,7 @@ class ImportJsonIntoDatabase extends Command{
                                 "published" => $data['published_at'],
                                 "value" => $data['value'] ?? null,
                                 "currency" => $data['currency'] ?? null,
-                                "deadline" => $data['awarded_at'] ?? null,
+                                "deadline" => $data['deadline'] ?? null,
                                 "slug" => $slug
                             ]);
                             $categories = $data['categories'] ?? [];
