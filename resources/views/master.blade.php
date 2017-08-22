@@ -12,28 +12,28 @@
 <script>
     window.api_url = "https://api.tedreader.co.uk/";
     @if(isset($total))
-        {{  "window.total = ".$total }};
+        {!! "window.total = ".$total !!};
     @endif
     @if(isset($results))
-        {{ "window.results = ".$total }};
+        {!! "window.results = ".$results !!};
     @endif
     @if(isset($notice))
-        {{ "window.notice = ".$notice }};
+        {!! "window.notice = ".$notice !!};
     @endif
     @if(isset($contacts))
-        {{ "window.contacts = ".$contacts }};
+        {!! "window.contacts = ".$contacts !!};
     @endif
     @if(isset($awards))
-        {{ "window.awards = ".$awards }};
+        {!! "window.awards = ".$awards !!};
     @endif
     @if(isset($lots))
-        {{ "window.lots = ".$lots }};
+        {!! "window.lots = ".$lots !!};
     @endif
     @if(isset($categories))
-        {{ "window.categories = ".$categories }};
+        {!! "window.categories = ".$categories !!};
     @endif
     @if(isset($category_list))
-        {{ "window.categories_list = ".$category_list }};
+        {!! "window.categories_list = ".$category_list !!};
     @endif
 
 </script>
