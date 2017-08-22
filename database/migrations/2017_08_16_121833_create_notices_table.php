@@ -28,8 +28,9 @@ class CreateNoticesTable extends Migration
 
             $table->timestamps();
 
-            $table->index('reference');
-            $table->index('slug');
+            $table->index(['deadline', 'slug'], 'deadline_slug_index');
+            $table->index(['published', 'slug'], 'published_slug_index');
+            $table->index(['value', 'slug'], 'value_slug_index');
         });
     }
 

@@ -17,6 +17,8 @@ class CreateNoticeCategoriesTable extends Migration
             $table->increments('id');
             $table->integer('notice_id');
             $table->integer('category_id');
+
+            $table->index(['notice_id', 'category_id'], 'notice_cat_index');
         });
     }
 
