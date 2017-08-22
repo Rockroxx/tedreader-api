@@ -33,7 +33,7 @@ class ConvertPackageToJson extends Command{
 
     private function extractAndRemoveTar($list){
         foreach($list as $tar){
-            if(strpos($tar, '.tar.gz') > 0 && strpos($tar, '-json.tar.gz') == false){
+            if(strpos($tar, '.tar.gz') > 0 && strpos($tar, '-json.tar') == false){
                 $folderName = explode('/', $tar);
                 $folderName = array_pop($folderName);
                 $this->line("Extracting $folderName");
@@ -42,14 +42,18 @@ class ConvertPackageToJson extends Command{
                     throw new \Exception("Error extracting $tar with the following error messages.\n\n".implode("\n", $output));
                 }
                 unlink($tar);
-                $this->convert();
+                $this->convert(str_replace('.tar.gz', '-json.tar', $tar));
             }
         }
 
     }
 
-    private function convert(){
+    private function convert($tar){
         $folders = app('files')->directories('storage/app/ted/raw/');
+        exec("tar cfT $tar /dev/null", $output);
+        if($output){
+            throw new \Exception("Error creating empty tar archive $tar with the following error messages.\n\n".implode("\n", $output));
+        }
         foreach($folders as $folder){
             $folderName = explode('/', $folder);
             $folderName = array_pop($folderName);
@@ -65,12 +69,16 @@ class ConvertPackageToJson extends Command{
                 app('files')->put("storage/app/ted/raw/$folderName/$fileName.json", json_encode($parsed));
                 unlink($file);
             }
-            exec("cd ".storage_path('app/ted/raw')." && tar -czf $folderName-json.tar.gz $folderName", $output);
+            exec("cd ".storage_path('app/ted/raw')." && tar -rf $tar $folderName", $output);
             if($output){
-                throw new \Exception("Error creating json tar $folderName with the following error messages.\n\n".implode("\n", $output));
+                throw new \Exception("Error adding folder $folderName to tar $tar with the following error messages.\n\n".implode("\n", $output));
             }
             array_map('unlink', glob("$folder/*.*"));
             rmdir($folder);
+        }
+        exec("gzip $tar", $output);
+        if($output){
+            throw new \Exception("Error compressing $tar with the following error messages.\n\n".implode("\n", $output));
         }
     }
 
