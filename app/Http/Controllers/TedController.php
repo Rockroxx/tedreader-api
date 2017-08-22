@@ -73,16 +73,16 @@ class TedController extends Controller
 
         if($request->has('order')){
             if($request->get('order') == 'deadline')
-                $notices->orderByRaw('ISNULL(deadline), deadline asc, title asc');
+                $notices->orderByRaw('ISNULL(notices.deadline), notices.deadline asc, notices.slug asc');
             if($request->get('order') == 'title')
-                $notices->orderBy('slug', 'asc');
+                $notices->orderBy('notices.slug', 'asc');
             if($request->get('order') == 'valuehl')
-                $notices->orderByRaw('ISNULL(value), -CAST(`value` AS UNSIGNED) DESC')->orderBy('title', 'asc');
+                $notices->orderByRaw('ISNULL(value), -CAST(`value` AS UNSIGNED) DESC')->orderBy('notices.slug', 'asc');
             if($request->get('order') == 'valuelh')
-                $notices->orderByRaw('ISNULL(value), CAST(`value` AS UNSIGNED) DESC')->orderBy('title', 'asc');
+                $notices->orderByRaw('ISNULL(value), CAST(`value` AS UNSIGNED) DESC')->orderBy('notices.slug', 'asc');
         }
         else
-            $notices->orderByRaw('ISNULL(published), published asc, title asc');
+            $notices->orderByRaw('ISNULL(notices.published), notices.published asc, notices.slug asc');
 
         $notices->
         take($request->get('take', 20))->
