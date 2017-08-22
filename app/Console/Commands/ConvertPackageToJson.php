@@ -80,6 +80,9 @@ class ConvertPackageToJson extends Command{
         if($output){
             throw new \Exception("Error compressing $tar with the following error messages.\n\n".implode("\n", $output));
         }
+
+        //TODO we are now compressing each tar as it is coming in which means daily packages will get converted and compressed to dailies.
+        // since we want this to be monthly so we need to extract previous months dailies and re compress them to monthly and update the tar_locations accordingly
     }
 
 }
