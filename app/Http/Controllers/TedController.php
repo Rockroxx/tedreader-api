@@ -34,16 +34,20 @@ class TedController extends Controller
                 return view('master', ['category_list' => $this->categories()]);
         }
 
-        $notices = app('db')->table('notice_details')->leftJoin('notices', 'notices.id', '=', 'notice_details.notice_id');
+        $notices = app('db')->table('notices');
+
+        $should_join = true;
 
         if($request->has('search')){
-            $notices = $notices->whereRaw("MATCH (notice_details.title, notice_details.description) against (? in BOOLEAN MODE)", $request->get('search'));
+            $should_join = false;
+            $notices = $notices->
+                join('notice_details', 'notice_details.notice_id', '=', 'notices.id')->
+                whereRaw("MATCH (notice_details.title, notice_details.description) against (? in BOOLEAN MODE)", $request->get('search'));
         }
 
 
         if($request->has('type'))
             $notices->where('type', $request->get('type'));
-
         if($request->has('nature'))
             $notices->where('nature', $request->get('nature'));
         if($request->has('lang'))
@@ -87,6 +91,11 @@ class TedController extends Controller
         $notices->
         take($request->get('take', 20))->
         skip($request->get('offset', 0));
+
+
+        if($should_join){
+            $notices->join('notice_details', 'notice_details.notice_id', '=', 'notices.id');
+        }
 
         if($request->isJson())
             return response()->json(['total' => $total, 'results' => $notices->get()]);
