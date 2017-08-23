@@ -9,7 +9,7 @@
 <div id="app"></div>
 <div style="clear:both"></div>
 <script type="text/javascript">
-    window.api_url = "https://api.tedreader.co.uk/";
+    window.api_url = "https://tedreader.co.uk/";
     @if(isset($total))
         {!! "window.total = ".$total !!};
     @endif
