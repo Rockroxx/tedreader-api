@@ -51,6 +51,4 @@ $app->get('/sitemap', function(\Illuminate\Http\Request $request){
     }
 });
 
-$app->get('/categories', function(){
-    return json_encode(app('db')->table('categories')->get());
-});
+$app->get('/categories', 'TedController@categories');

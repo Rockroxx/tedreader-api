@@ -31,7 +31,7 @@ class TedController extends Controller
             if($request->isJson())
                 return response()->json(['errors' => $v->errors()]);
             else
-                return view('master', ['category_list' => json_encode(app('db')->table('categories')->select('code', 'name')->get())]);
+                return view('master', ['category_list' => $this->categories()]);
         }
 
         $notices = app('db')->table('notice_details')->rightJoin('notices', 'notices.id', '=', 'notice_details.notice_id');
@@ -91,8 +91,11 @@ class TedController extends Controller
         if($request->isJson())
             return response()->json(['total' => $total, 'results' => $notices->get()]);
         else
-            return view('master', ['total' => $total,
-                'category_list' => json_encode(app('db')->table('categories')->select('code', 'name')->get())]);
+            return view('master', [
+                'total' => $total,
+                'results' => $notices->get(),
+                'category_list' => $this->categories()
+            ]);
     }
 
 
@@ -110,7 +113,7 @@ class TedController extends Controller
                 return response()->json(['error' => "The requested notice could not be found."], 404);
             }
             else{
-                return view('master', [['category_list' => json_encode(app('db')->table('categories')->select('code', 'name')->get())]]);
+                return view('master', [['category_list' => $this->categories()]]);
             }
         }
 
@@ -137,7 +140,7 @@ class TedController extends Controller
                     'lots' => json_encode($lots),
                     'awards' => json_encode($awards),
                     'categories' => json_encode($categories),
-                    'category_list' => json_encode(app('db')->table('categories')->select('code', 'name')->get())
+                    'category_list' => $this->categories()
                 ]);
         }
     }
@@ -150,5 +153,11 @@ class TedController extends Controller
         });
         return response()->json(['total' => $total], 200);
 
+    }
+
+    public function categories(){
+        return json_encode(app('cache')->remember('categories', 60, function(){
+            return app('db')->table('categories')->select('code', 'name')->get();
+        }));
     }
 }
