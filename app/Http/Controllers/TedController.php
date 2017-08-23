@@ -34,7 +34,16 @@ class TedController extends Controller
                 return view('master', ['category_list' => $this->categories()]);
         }
 
-        $notices = app('db')->table('notices');
+        $notices = app('db')->
+            table('notices')->
+            select(
+                'notices.slug',
+                'notices.published',
+                'notices.deadline',
+                'notices.value',
+                'notices.currency',
+                'notice_details.title'
+        );
 
         $should_join = true;
 
