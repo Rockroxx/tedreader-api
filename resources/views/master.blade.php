@@ -52,6 +52,6 @@
     if (raf) raf(function() { window.setTimeout(loadDeferredStyles, 0); });
     else window.addEventListener('load', loadDeferredStyles);
 </script>
-<script src="/dist/build.js" type="text/javascript"></script>
+<script async src="/dist/build.js" type="text/javascript"></script>
 </body>
 </html>
