@@ -145,6 +145,34 @@ class TedController extends Controller
         }
     }
 
+    public function home(){
+        return view('master', [
+            'category_list' => $this->categories(),
+            'total' => $this->total()
+        ]);
+    }
+
+    public function about(){
+        return view('master', [
+            'category_list' => $this->categories(),
+            'total' => $this->total()
+        ]);
+    }
+
+    public function sitemap(){
+        return view('master', [
+            'category_list' => $this->categories(),
+            'total' => $this->total()
+        ]);
+    }
+
+    public function disclaimer(){
+        return view('master', [
+            'category_list' => $this->categories(),
+            'total' => $this->total()
+        ]);
+    }
+
     public function total(){
         $total = app('cache')->remember('total', 500, function(){
 
