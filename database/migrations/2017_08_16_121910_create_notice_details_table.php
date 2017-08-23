@@ -15,7 +15,7 @@ class CreateNoticeDetailsTable extends Migration
     {
         Schema::create('notice_details', function(Blueprint $table){
             $table->increments('id');
-            $table->integer('notice_id');
+            $table->integer('notice_id')->unsigned();
 
             $table->text('title')->nullable();
             $table->text('description')->nullable();
