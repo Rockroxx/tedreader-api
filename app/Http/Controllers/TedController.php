@@ -139,7 +139,7 @@ class TedController extends Controller
         $awards = app('db')->table('notice_awards')->where('notice_id', $notice->id)->get();
         $categories = app('db')->table('notice_categories')->where('notice_id', $notice->id)->get();
 
-        if($request->acceptsJson()){
+        if($request->ajax()){
             return response()->json(
                 [
                     'notice' => $notice,
