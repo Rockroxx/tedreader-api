@@ -64,7 +64,7 @@ class TedController extends Controller
         if($request->has('country'))
             $notices->where('country', $request->get('country'));
         if($request->has('show_expired'))
-            $notices->whereRaw("deadline IS NOT NULL and deadline <= ?", [date('Y-m-d')]);
+            $notices->whereNotNull('notices.deadline')->where('notices.deadline', '<=', date('Y-m-d'));
         if($request->has('categories')){
             {
                 $codes = explode(',', $request->get('categories'));
@@ -85,13 +85,13 @@ class TedController extends Controller
 
         if($request->has('order')){
             if($request->get('order') == 'deadline')
-                $notices->whereRaw('notices.deadline IS NOT NULL')->orderByRaw('notices.deadline asc, notices.slug asc');
+                $notices->whereNotNull('notices.deadline')->orderByRaw('notices.deadline asc, notices.slug asc');
             if($request->get('order') == 'title')
                 $notices->orderBy('notices.slug', 'asc');
             if($request->get('order') == 'valuehl')
-                $notices->orderByRaw('ISNULL(value), -CAST(`value` AS UNSIGNED) DESC')->orderBy('notices.slug', 'asc');
+                $notices->whereNotNull('notices.value')->orderBy('notices.value', 'ASC')->orderBy('notices.slug', 'asc');
             if($request->get('order') == 'valuelh')
-                $notices->orderByRaw('ISNULL(value), CAST(`value` AS UNSIGNED) DESC')->orderBy('notices.slug', 'asc');
+                $notices->whereNotNull('notices.value')->orderBy('notices.value', 'desc')->orderBy('notices.slug', 'asc');
         }
         else
             $notices->orderByRaw('notices.published asc, notices.slug asc');
@@ -162,6 +162,9 @@ class TedController extends Controller
         }
     }
 
+    /**
+     * @return \Illuminate\View\View
+     */
     public function home(){
         return view('master', [
             'category_list' => $this->categories(),
@@ -169,6 +172,9 @@ class TedController extends Controller
         ]);
     }
 
+    /**
+     * @return \Illuminate\View\View
+     */
     public function about(){
         return view('master', [
             'category_list' => $this->categories(),
@@ -176,6 +182,9 @@ class TedController extends Controller
         ]);
     }
 
+    /**
+     * @return \Illuminate\View\View
+     */
     public function sitemap(){
         return view('master', [
             'category_list' => $this->categories(),
@@ -183,6 +192,9 @@ class TedController extends Controller
         ]);
     }
 
+    /**
+     * @return \Illuminate\View\View
+     */
     public function disclaimer(){
         return view('master', [
             'category_list' => $this->categories(),
@@ -190,6 +202,9 @@ class TedController extends Controller
         ]);
     }
 
+    /**
+     * @return string
+     */
     public function total(){
         return json_encode(app('cache')->remember('total', 60, function(){
             return app('db')->table('notices')->count();
@@ -197,6 +212,9 @@ class TedController extends Controller
 
     }
 
+    /**
+     * @return string
+     */
     public function categories(){
         return app('files')->get(storage_path('categories_tree.json'));
     }
