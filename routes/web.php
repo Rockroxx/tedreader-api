@@ -15,6 +15,7 @@
 $app->get('/total', 'TedController@total');
 
 $app->get('/', 'TedController@search');
+$app->get('/search', 'TedController@search');
 $app->post('/search', 'TedController@search');
 
 $app->get('/view/{slug}', 'TedController@view');
