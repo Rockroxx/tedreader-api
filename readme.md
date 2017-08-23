@@ -30,11 +30,13 @@ The importing is going to take a very long time when you are importing years wor
 
 While you are busy importing you might as well set up cronjobs I suggest the following; 9 AM each morning tuesday to saturday.
 
-    0 9 * * 2 cd /path/to/api/root && php artisan ted:daily && php artisan ted:convert && php artisan ted:import
-    0 9 * * 3 cd /path/to/api/root && php artisan ted:daily && php artisan ted:convert && php artisan ted:import
-    0 9 * * 4 cd /path/to/api/root && php artisan ted:daily && php artisan ted:convert && php artisan ted:import
-    0 9 * * 5 cd /path/to/api/root && php artisan ted:daily && php artisan ted:convert && php artisan ted:import
-    0 9 * * 6 cd /path/to/api/root && php artisan ted:daily && php artisan ted:convert && php artisan ted:import
+    0 9 * * 2 cd /var/www/tedreader-api && php artisan ted:daily    
+    0 9 * * 3 cd /var/www/tedreader-api && php artisan ted:daily                  
+    0 9 * * 4 cd /var/www/tedreader-api && php artisan ted:daily 
+    0 9 * * 5 cd /var/www/tedreader-api && php artisan ted:daily 
+    0 9 * * 6 cd /var/www/tedreader-api && php artisan ted:daily
+    0 9 * * * cd /var/www/tedreader-api && php artisan ted:convert
+    0 9 * * * cd /var/www/tedreader-api && php artisan ted:import
 
 also you might want to take a look at app/bootstrap.php to lock down the cors header.
 
