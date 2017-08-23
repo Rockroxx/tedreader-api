@@ -174,12 +174,9 @@ class TedController extends Controller
     }
 
     public function total(){
-        $total = app('cache')->remember('total', 500, function(){
-
+        return json_encode(app('cache')->remember('total', 60, function(){
             return app('db')->table('notices')->count();
-
-        });
-        return response()->json(['total' => $total], 200);
+        }));
 
     }
 
