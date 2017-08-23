@@ -27,7 +27,7 @@ class ConvertPackageToJson extends Command{
         $list = app('files')->files('storage/app/ted/raw');
         $this->extractAndRemoveTar($list);
 
-        $this->line("Finished extracting. Starting conversion into json.");
+        $this->line("Finished extracting.");
 
     }
 
@@ -42,7 +42,7 @@ class ConvertPackageToJson extends Command{
                     throw new \Exception("Error extracting $tar with the following error messages.\n\n".implode("\n", $output));
                 }
                 unlink($tar);
-                $this->convert(str_replace('.tar.gz', '-json.tar', $tar));
+                $this->convert(base_path(str_replace('.tar.gz', '-json.tar', $tar)));
             }
         }
 
@@ -50,6 +50,7 @@ class ConvertPackageToJson extends Command{
 
     private function convert($tar){
         $folders = app('files')->directories('storage/app/ted/raw/');
+        $this->line("Creating container tar $tar.");
         exec("tar cfT $tar /dev/null", $output);
         if($output){
             throw new \Exception("Error creating empty tar archive $tar with the following error messages.\n\n".implode("\n", $output));
