@@ -72,12 +72,10 @@ class TedController extends Controller
                     $codes[$index] = "^$code";
                 }
 
-                $notice_ids = implode(',',array_pluck(app('db')->table('notices')->select('notices.id')->
+                    $notices->
                         join('notice_categories', 'notices.id', '=', 'notice_categories.notice_id')->
                         join('categories', 'categories.id', '=', 'notice_categories.category_id')->
-                        whereRaw("categories.code REGEXP ?", [implode('|', $codes)])->get()->toArray(), 'id'));
-
-                $notices->whereRaw('notices.id in (?)', [$notice_ids]);
+                        whereRaw("categories.code REGEXP ?", [implode('|', $codes)]);
             }
         }
 
