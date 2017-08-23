@@ -85,7 +85,7 @@ class TedController extends Controller
 
         if($request->has('order')){
             if($request->get('order') == 'deadline')
-                $notices->orderByRaw('ISNULL(notices.deadline), notices.deadline asc, notices.slug asc');
+                $notices->whereRaw('notices.deadline IS NOT NULL')->orderByRaw('notices.deadline asc, notices.slug asc');
             if($request->get('order') == 'title')
                 $notices->orderBy('notices.slug', 'asc');
             if($request->get('order') == 'valuehl')
