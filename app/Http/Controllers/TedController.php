@@ -126,7 +126,7 @@ class TedController extends Controller
         $notice = app('db')->table('notices')->join('notice_details', 'notices.id', '=', 'notice_details.notice_id')->where('slug', $slug)->first();
 
         if(!$notice){
-            if($request->acceptsJson()){
+            if($request->ajax()){
                 return response()->json(['error' => "The requested notice could not be found."], 404);
             }
             else{
@@ -198,8 +198,6 @@ class TedController extends Controller
     }
 
     public function categories(){
-        return json_encode(app('cache')->remember('categories', 60, function(){
-            return app('db')->table('categories')->select('code', 'name')->get();
-        }));
+        return app('files')->get(storage_path('categories_tree.json'));
     }
 }
