@@ -71,12 +71,13 @@ class TedController extends Controller
                 foreach($codes as $index => $code){
                     $codes[$index] = "^$code";
                 }
-                $notices->whereIn('notices.id', function($q) use ($codes){
-                    $q->select('notices.id')->from('notices')->
+
+                $notice_ids = implode(',',array_pluck(app('db')->table('notices')->select('notices.id')->
                         join('notice_categories', 'notices.id', '=', 'notice_categories.notice_id')->
                         join('categories', 'categories.id', '=', 'notice_categories.category_id')->
-                        whereRaw("categories.code REGEXP ?", [implode('|', $codes)]);
-                });
+                        whereRaw("categories.code REGEXP ?", [implode('|', $codes)])->get()->toArray(), 'id'));
+
+                $notices->whereRaw('notices.id in (?)', [$notice_ids]);
             }
         }
 
