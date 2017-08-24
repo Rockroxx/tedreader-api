@@ -94,7 +94,7 @@ class TedController extends Controller
                 $notices->whereNotNull('notices.value')->orderBy('notices.value', 'desc')->orderBy('notices.slug', 'asc');
         }
         else
-            $notices->orderByRaw('notices.published asc, notices.slug asc');
+            $notices->orderByRaw('notices.published desc');
 
         $notices->
         take($request->get('take', 20))->
